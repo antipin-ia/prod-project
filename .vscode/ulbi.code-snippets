@@ -1,0 +1,31 @@
+{
+	"Print to console": {
+		"scope": "javascript,typescript",
+		"prefix": "log",
+		"body": [
+			"console.log('$1');",
+			"$2"
+		],
+		"description": "Log output to console"
+	},
+	"UlbCode": {
+		"prefix": "ivaka",
+		"body": [
+		  "import { classNames } from 'shared/lib/classNames/classNames'",
+		  "import styles from './${TM_FILENAME_BASE}.module.scss'",
+		  "",
+		  "interface ${TM_FILENAME_BASE}Props {",
+		  "    className?: string;",
+		  "}",
+		  "",
+		  "export const ${TM_FILENAME_BASE} = ({className}: ${TM_FILENAME_BASE}Props) => {",
+		  "  return (",
+		  "    <div className={classNames(styles.${TM_FILENAME_BASE} ,{}, [className])}>",
+		  "    </div>",
+		  "  )",
+		  "}",
+		  ""
+		],
+		"description": "UlbCode"
+	  }
+}
