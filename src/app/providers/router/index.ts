@@ -1,5 +1,5 @@
-import { AppRouner } from "./ui/AppRouner";
+import { AppRouner } from './ui/AppRouner';
 
-export { 
+export {
     AppRouner,
-}
+};
