@@ -41,6 +41,7 @@ module.exports = {
         'react/button-has-type': 'off',
         'linebreak-style': 'off',
         'i18next/no-literal-string': ['error', { markupOnly: true }],
+        'max-len': ['error', { ignoreComments: true }],
     },
     globals: {
         __IS_DEV__: true,
