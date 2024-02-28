@@ -1,6 +1,9 @@
 {
-    "Тестовый пример":"Test example",
-    "Перевод":"Translate",
-    "Язык": "English",
-    "Главная":"Main page"
+	"Тестовый пример": "Test example",
+	"Перевод": "Translate",
+	"Язык": "English",
+	"Главная": "Main page",
+	"Страница не найдена": "Page not found",
+	"Произошла непредвиденная ошибка": "Ups! Error",
+	"throw error": "throw error"
 }
