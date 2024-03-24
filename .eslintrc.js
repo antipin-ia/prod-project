@@ -4,9 +4,7 @@ module.exports = {
         es2021: true,
         jest: true,
     },
-    extends: ['plugin:react/recommended',
-        'airbnb',
-    ],
+    extends: ['plugin:react/recommended', 'airbnb', 'plugin:storybook/recommended'],
     parser: '@typescript-eslint/parser',
     parserOptions: {
         ecmaFeatures: {
@@ -22,7 +20,7 @@ module.exports = {
         indent: [2, 4],
         'react/jsx-filename-extension': [
             2,
-            { extensions: ['.js', '.jsx', '.tsx'] },
+            { extensions: ['.js', '.jsx', '.tsx', '.ts'] },
         ],
         'import/no-unresolved': 'off',
         'import/prefer-default-export': 'off',
@@ -37,7 +35,7 @@ module.exports = {
         'no-underscore-dangle': 'off',
         'react/button-has-type': 'off',
         'linebreak-style': 'off',
-        'max-len': ['error', { ignoreComments: true }],
+        'max-len': ['error', { ignoreComments: true, code: 100 }],
     },
     globals: {
         __IS_DEV__: true,
