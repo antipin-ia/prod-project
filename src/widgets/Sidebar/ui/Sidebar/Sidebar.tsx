@@ -33,7 +33,7 @@ export const Sidebar = ({ className }: SidebarProps) => {
             )}
         >
             <Button
-                data-testid="sidebar-todle"
+                data-testid="sidebar-toggle"
                 onClick={onToggle}
                 className={styles.collabseBtn}
                 theme={ThemeButton.BACKGROUND_INVERTED}
