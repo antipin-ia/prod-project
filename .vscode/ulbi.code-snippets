@@ -27,5 +27,24 @@
 		  ""
 		],
 		"description": "UlbCode"
-	  }
+	  } ,
+	  "UlbCodeTest": {
+  		"prefix": "tstest",
+  		"body": [
+    		"import { StateSchema } from 'app/providers/StoreProvider';",
+    		"import { ${TM_FILENAME_BASE}} from '';",
+    		"",
+    		"type DeepPartial<T> = {",
+    	"    [P in keyof T]?: DeepPartial<T[P]>",
+    	"}",
+    	"",
+    	"describe('${TM_FILENAME_BASE}', () => {",
+    	"    test('', () => {",
+   	 	"        expect().toEqual();",
+    "    });",
+    "});",
+    ""
+  ],
+  "description": "UlbCodeTest"
+}
 }
