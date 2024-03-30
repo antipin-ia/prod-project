@@ -1,37 +1,42 @@
 import { classNames } from 'shared/lib/classNames/classNames';
-import { useSSR, useTranslation } from 'react-i18next';
 import React, {
-    ReactNode, useEffect, useRef, useState,
+    ReactNode,
+    useCallback,
+    useEffect,
+    useRef,
+    useState,
 } from 'react';
 import { Portal } from 'shared/ui/Portal/Portal';
 import { useTheme } from 'app/providers/ThemeProvider';
-import styles from './Modal.module.scss';
+import cls from './Modal.module.scss';
 
 interface ModalProps {
-    className?: string;
-    children?: ReactNode;
-    isOpen?: boolean;
-    onClose?: () => void;
+    className?: string
+    children?: ReactNode
+    isOpen?: boolean
+    onClose?: () => void
+    lazy?: boolean
 }
 
-const ANIMATION_DELAY: number = 300;
+const ANIMATION_DELAY = 300;
 
 export const Modal = (props: ModalProps) => {
-    const { t } = useTranslation();
     const {
-        className,
-        children,
-        isOpen,
-        onClose,
+        className, children, isOpen, onClose, lazy,
     } = props;
 
     const [isClosing, setIsClosing] = useState(false);
-
-    const timerRef = useRef < ReturnType<typeof setTimeout>>();
-
+    const [isMounted, setIsMounted] = useState(false);
+    const timerRef = useRef<ReturnType<typeof setTimeout>>();
     const { theme } = useTheme();
 
-    const closeHandler = () => {
+    useEffect(() => {
+        if (isOpen) {
+            setIsMounted(true);
+        }
+    }, [isOpen]);
+
+    const closeHandler = useCallback(() => {
         if (onClose) {
             setIsClosing(true);
             timerRef.current = setTimeout(() => {
@@ -39,42 +44,49 @@ export const Modal = (props: ModalProps) => {
                 setIsClosing(false);
             }, ANIMATION_DELAY);
         }
-    };
+    }, [onClose]);
+
+    // Новые ссылки!!!
+    const onKeyDown = useCallback(
+        (e: KeyboardEvent) => {
+            if (e.key === 'Escape') {
+                closeHandler();
+            }
+        },
+        [closeHandler],
+    );
 
     const onContentClick = (e: React.MouseEvent) => {
         e.stopPropagation();
     };
 
     useEffect(() => {
-        const handleKeyDown = (e: KeyboardEvent) => {
-            if (e.key === 'Escape' && isOpen && onClose) {
-                onClose();
-            }
-        };
-
-        document.addEventListener('keydown', handleKeyDown);
+        if (isOpen) {
+            window.addEventListener('keydown', onKeyDown);
+        }
 
         return () => {
-            document.removeEventListener('keydown', handleKeyDown);
             clearTimeout(timerRef.current);
+            window.removeEventListener('keydown', onKeyDown);
         };
-    }, [isOpen, onClose]);
+    }, [isOpen, onKeyDown]);
 
     const mods: Record<string, boolean> = {
-        [styles.opened]: isOpen,
-        [styles.isClosing]: isClosing,
+        [cls.opened]: isOpen,
+        [cls.isClosing]: isClosing,
     };
+
+    if (lazy && !isMounted) {
+        return null;
+    }
 
     return (
         // <Portal>
-        <div className={classNames(styles.Modal, mods, [className, theme])}>
-            <div
-                className={styles.overlay}
-                onClick={closeHandler}
-                role="dialog"
-                tabIndex={-1}
-            >
-                <div className={styles.content} onClick={onContentClick}>
+        <div
+            className={classNames(cls.Modal, mods, [className, theme, 'app_modal'])}
+        >
+            <div className={cls.overlay} onClick={closeHandler}>
+                <div className={cls.content} onClick={onContentClick}>
                     {children}
                 </div>
             </div>
